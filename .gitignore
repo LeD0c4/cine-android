@@ -1,0 +1,12 @@
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+# Clé de signature : à sauvegarder à part, jamais dans git
+selvania.keystore
+keystore.properties
+
+# Sorties de compilation (publiées à part)
+apk/
+.kotlin/

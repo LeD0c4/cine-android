@@ -1,0 +1,83 @@
+# Compile Selvania Ciné pour Android à chaque envoi et pull request, et publie l'APK dans une
+# « release » quand on pousse une étiquette v* (ex. git tag v2.0.1 && git push --tags).
+#
+# L'interface vient du dépôt cine-web (variable de dépôt CINE_WEB_REPO, sinon LeD0c4/cine-web).
+# Secrets facultatifs pour un APK signé « release » : KEYSTORE_BASE64 (fichier .keystore en base64),
+# STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD. Sans eux, l'APK est signé avec une clé de débogage.
+name: Android
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: cine-android
+
+      - name: Interface (dépôt cine-web)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.CINE_WEB_REPO || 'LeD0c4/cine-web' }}
+          path: cine-web
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cine-web/package-lock.json
+
+      - name: Construire l'interface (version appli)
+        working-directory: cine-web
+        run: |
+          npm ci
+          npm run build:app
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Clé de signature
+        if: env.HAS_KEYSTORE == 'true'
+        working-directory: cine-android
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > selvania.keystore
+          printf 'storePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > keystore.properties
+
+      - name: Compiler l'APK
+        working-directory: cine-android
+        run: |
+          if [ "$HAS_KEYSTORE" = "true" ]; then variant=Release; else variant=Debug; fi
+          ./gradlew --no-daemon ":cine:assemble$variant"
+          mkdir -p ../out
+          cp cine/build/outputs/apk/*/*.apk ../out/Selvania-Cine.apk
+
+      - name: Effacer la clé de signature
+        if: always()
+        working-directory: cine-android
+        run: rm -f selvania.keystore keystore.properties
+
+      - name: Publier la version
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.apk

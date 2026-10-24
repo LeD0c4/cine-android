@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:buffered_color="#59FFFFFF"
+        app:controller_layout_id="@layout/selvania_controls"
+        app:played_color="@color/gold"
+        app:scrubber_color="@color/gold"
+        app:show_buffering="when_playing"
+        app:show_shuffle_button="false"
+        app:show_subtitle_button="true"
+        app:unplayed_color="#33FFFFFF" />
+
+    <!-- Titre en haut, visible avec les commandes -->
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@drawable/shade_top"
+        android:orientation="horizontal"
+        android:paddingHorizontal="48dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="40dp">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@null"
+            android:src="@drawable/logo_mark" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/text"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/text_2"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_ghost"
+            android:paddingHorizontal="20dp"
+            android:stateListAnimator="@null"
+            android:text="@string/next_episode"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="140dp"
+        android:background="@drawable/btn_gold"
+        android:paddingHorizontal="28dp"
+        android:stateListAnimator="@null"
+        android:text="@string/skip_intro"
+        android:textAllCaps="false"
+        android:textColor="#FF1B1104"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Générique de fin, façon Netflix : la vidéo continue en petit à gauche (toucher = annuler) -->
+    <View
+        android:id="@+id/upnext_hit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="false"
+        android:visibility="gone" />
+
+    <!-- … et l'épisode suivant à droite (largeur fixée à l'affichage : 44 % de l'écran) -->
+    <LinearLayout
+        android:id="@+id/upnext"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="48dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/upnext_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gold"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/upnext_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/graphite_2"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/upnext_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/upnext_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.15"
+            android:maxLines="3"
+            android:textColor="@color/text_2"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Largeur fixe : le remplissage du compte à rebours ne doit pas étirer le bouton -->
+            <FrameLayout
+                android:id="@+id/upnext_play"
+                android:layout_width="150dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_gold"
+                android:clickable="true"
+                android:focusable="true">
+
+                <View
+                    android:id="@+id/upnext_fill"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#59FFFFFF"
+                    android:scaleX="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_play"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp"
+                    android:text="@string/up_next_play"
+                    android:textColor="#FF1B1104"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/upnext_credits"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_ghost"
+                android:minWidth="0dp"
+                android:paddingHorizontal="22dp"
+                android:stateListAnimator="@null"
+                android:text="@string/up_next_credits"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

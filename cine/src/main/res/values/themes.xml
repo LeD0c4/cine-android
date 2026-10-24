@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AppCompat : nécessaire aux fenêtres Chromecast (choix de l'appareil, télécommande) -->
+    <style name="Theme.Cine" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/graphite</item>
+        <item name="colorPrimary">@color/graphite</item>
+        <item name="colorPrimaryDark">@color/graphite</item>
+        <item name="colorAccent">@color/gold</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="castMiniControllerStyle">@style/CineMiniController</item>
+    </style>
+
+    <style name="Theme.Cine.Player">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Theme.Cine.Cast">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="castExpandedControllerStyle">@style/CineExpandedController</item>
+    </style>
+
+    <style name="CineMiniController" parent="CastMiniController">
+        <item name="castShowImageThumbnail">true</item>
+        <item name="castBackground">@color/graphite_2</item>
+        <item name="castProgressBarColor">@color/gold</item>
+        <item name="castTitleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="castSubtitleTextAppearance">@style/TextAppearance.AppCompat.Caption</item>
+    </style>
+
+    <style name="CineExpandedController" parent="CastExpandedController">
+        <item name="castSeekBarProgressAndThumbColor">@color/gold</item>
+        <item name="castButtonColor">@color/text</item>
+    </style>
+</resources>

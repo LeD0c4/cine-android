@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="graphite">#FF0C0D10</color>
+    <color name="graphite_2">#FF16181D</color>
+    <color name="icon_bg">#FF161921</color>
+    <color name="gold">#FFF7A01F</color>
+    <color name="gold_hot">#FFFD7A10</color>
+    <color name="text">#FFF4F5F7</color>
+    <color name="text_2">#BBE6E9EE</color>
+</resources>

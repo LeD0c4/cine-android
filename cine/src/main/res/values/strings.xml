@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Selvania Ciné</string>
+    <string name="offline_title">Interface introuvable</string>
+    <string name="offline_text">Réinstallez l’appli Selvania Ciné.</string>
+    <string name="retry">Réessayer</string>
+    <string name="skip_intro">Passer l’intro</string>
+    <string name="skip_recap">Passer le récap</string>
+    <string name="next_episode">Épisode suivant</string>
+    <string name="up_next_in">Épisode suivant dans %1$d s</string>
+    <string name="up_next">Épisode suivant</string>
+    <string name="up_next_play">Continuer</string>
+    <string name="up_next_credits">Annuler</string>
+    <string name="play_error">Lecture impossible : %1$s</string>
+    <string name="cast_title">Lire sur un Chromecast</string>
+    <string name="cast_loading">Envoi vers %1$s…</string>
+    <string name="cast_error">Diffusion impossible : %1$s</string>
+    <string name="cast_menu">Chromecast</string>
+    <string name="update_title">Mise à jour disponible</string>
+    <string name="update_text">Selvania Ciné %1$s est disponible (vous avez la %2$s).</string>
+    <string name="update_install">Mettre à jour</string>
+    <string name="update_later">Plus tard</string>
+    <string name="update_downloading">Téléchargement de la mise à jour…</string>
+    <string name="update_failed">Mise à jour impossible : %1$s</string>
+    <string name="update_none">Selvania Ciné est à jour (%1$s).</string>
+    <string name="update_allow">Autorisez Selvania Ciné à installer des applis, puis revenez.</string>
+</resources>
