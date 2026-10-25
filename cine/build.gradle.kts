@@ -23,8 +23,8 @@ android {
         applicationId = "fr.selvania.cine"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "2.0.3"
+        versionCode = 7
+        versionName = "2.0.4"
         // Dépôt des mises à jour (gradle.properties : updateFeed) ; vide = désactivé.
         buildConfigField("String", "UPDATE_FEED", "\"${providers.gradleProperty("updateFeed").getOrElse("")}\"")
     }
